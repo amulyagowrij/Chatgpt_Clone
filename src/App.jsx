@@ -67,7 +67,7 @@
 //           <div className="chats">
 //             {messages.map((msg, idx) => (
 //               <div key={idx} className={`chat ${msg.isBot ? "bot" : "user"}`}>
-//                 <img className="chatImg" src={msg.isBot ? logo : user} alt="" />
+//                 <img className="chatImg" src={msg.isBot ? logo : ""} alt="" />
 //                 <p className="txt">{msg.text}</p>
 //               </div>
 //             ))}
