@@ -126,10 +126,9 @@ function App() {
     setInput("");
 
     try {
-      const response = await axios.post("http://localhost:8000/ask", {
-        question: input,
-      });
-
+      const response = await axios.post("http://localhost:8000/ask", JSON.stringify({
+        "question": input,
+      }));
       setMessages((prev) => [
         ...prev,
         { text: response.data.answer, isBot: true },
