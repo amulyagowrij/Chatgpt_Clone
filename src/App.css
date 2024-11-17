@@ -20,12 +20,12 @@ body {
 }
 
 .sideBar {
-  flex: 3;
+  /* flex: 2; */
   border-right: 1px solid rgb(100, 100, 100);
 }
 
 .main {
-  flex: 9;
+  /* flex: 10; */
 }
 
 .logo {
@@ -93,25 +93,25 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 6rem 10rem;
+  margin: 6rem auto;
 }
 .chats {
   overflow: hidden;
   overflow-y: scroll;
   scroll-behavior: smooth;
   width: 100%;
-  max-width: 70rem;
+  max-width: 90rem;
   height: calc(100vh - 17rem);
-  padding: 1rem;
+  margin-left: -3rem;
+  margin-right: -3rem;
 }
-
 .chats::-webkit-scrollbar {
   display: none;
 }
 .chat {
   margin: 1rem;
   margin-bottom: 3rem;
-  padding: 1rem 1rem;
+  padding: 2rem 1rem;
   font-size: 1.5rem;
   display: flex;
   align-items: flex-start;
@@ -170,7 +170,8 @@ body {
   display: flex;
   align-items: center;
   border-radius: 0.5rem;
-  width: 68rem;
+  width: 100%;
+  max-width: 90rem;
 }
 .inp > input {
   width: calc(100% - 3rem);
