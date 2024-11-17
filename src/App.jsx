@@ -100,6 +100,7 @@
 // export default App;
 
 import { useEffect, useState, useRef } from "react";
+import axios from "axios";
 import "./App.css";
 import gptLogo from "./assets/chatgpt.svg";
 import addBtn from "./assets/add-30.png";
@@ -125,21 +126,14 @@ function App() {
     setInput("");
 
     try {
-      const response = await fetch("http://localhost:8000/ask", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ question: input }),
+      const response = await axios.post("http://localhost:8000/ask", {
+        question: input,
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to fetch response from the server");
-      }
-
-      const data = await response.json();
-
-      setMessages((prev) => [...prev, { text: data.answer, isBot: true }]);
+      setMessages((prev) => [
+        ...prev,
+        { text: response.data.answer, isBot: true },
+      ]);
     } catch (error) {
       console.error("Error communicating with backend:", error);
       setMessages((prev) => [
