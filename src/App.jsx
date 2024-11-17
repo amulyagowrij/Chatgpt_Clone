@@ -6,6 +6,8 @@
 // import sendBtn from "./assets/send.svg";
 // import userIcon from "./assets/user-icon.png";
 // import gptImgLogo from "./assets/chatgptLogo.svg";
+// import user from "./assets/user.png";
+// import logo from "./assets/QB.jpg";
 // import { sendMsgToOpenAI } from "./openai";
 
 // function App() {
@@ -46,7 +48,7 @@
 //         <div className="sideBar">
 //           <div className="upperSide">
 //             <div className="upperSideTop">
-//               <img src={gptLogo} alt="" className="logo" />
+//               <img src={logo} alt="" className="logo" />
 //               <span className="brand">ChatGPT</span>
 //             </div>
 //             <button className="midBtn">
@@ -65,11 +67,7 @@
 //           <div className="chats">
 //             {messages.map((msg, idx) => (
 //               <div key={idx} className={`chat ${msg.isBot ? "bot" : "user"}`}>
-//                 <img
-//                   className="chatImg"
-//                   src={msg.isBot ? gptImgLogo : userIcon}
-//                   alt=""
-//                 />
+//                 <img className="chatImg" src={msg.isBot ? logo : user} alt="" />
 //                 <p className="txt">{msg.text}</p>
 //               </div>
 //             ))}
@@ -102,19 +100,21 @@
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import "./App.css";
+import ReactMarkdown from "react-markdown";
 import gptLogo from "./assets/chatgpt.svg";
 import addBtn from "./assets/add-30.png";
 import home from "./assets/home.svg";
 import sendBtn from "./assets/send.svg";
 import userIcon from "./assets/user-icon.png";
 import gptImgLogo from "./assets/chatgptLogo.svg";
-
+import user from "./assets/user.png";
+import logo from "./assets/QB.jpg";
 function App() {
   const msgEnd = useRef(null);
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([
     {
-      text: "Hello! I'm ChatGPT. How can I assist you today?",
+      text: "Hello! I'm QueryBuddy. How can I assist you today?",
       isBot: true,
     },
   ]);
@@ -126,9 +126,12 @@ function App() {
     setInput("");
 
     try {
-      const response = await axios.post("http://localhost:8000/ask", {
-        question: input,
-      });
+      const response = await axios.post(
+        "http://localhost:8000/ask",
+        JSON.stringify({
+          question: input,
+        })
+      );
 
       setMessages((prev) => [
         ...prev,
@@ -159,31 +162,28 @@ function App() {
         <div className="sideBar">
           <div className="upperSide">
             <div className="upperSideTop">
-              <img src={gptLogo} alt="" className="logo" />
-              <span className="brand">ChatGPT</span>
+              <img src={logo} alt="" className="logo" />
+              <span className="brand">QueryBuddy</span>
             </div>
-            <button className="midBtn">
+            <button
+              className="midBtn"
+              onClick={() => {
+                window.location.reload();
+              }}
+            >
               <img src={addBtn} alt="" className="addBtn" />
               NewChat
             </button>
-          </div>
-          <div className="lowerSide">
-            <div className="listItems">
-              <img src={home} alt="" className="listItemsImg" />
-              Home
-            </div>
           </div>
         </div>
         <div className="main">
           <div className="chats">
             {messages.map((msg, idx) => (
               <div key={idx} className={`chat ${msg.isBot ? "bot" : "user"}`}>
-                <img
-                  className="chatImg"
-                  src={msg.isBot ? gptImgLogo : userIcon}
-                  alt=""
-                />
-                <p className="txt">{msg.text}</p>
+                <img className="chatImg" src={msg.isBot ? logo : user} alt="" />
+                <p className="txt">
+                  <ReactMarkdown>{msg.text}</ReactMarkdown>
+                </p>
               </div>
             ))}
             <div ref={msgEnd} />
