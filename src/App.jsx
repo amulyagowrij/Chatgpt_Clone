@@ -118,16 +118,18 @@ function App() {
       isBot: true,
     },
   ]);
+  const [isTyping, setIsTyping] = useState(false);
 
   const handleSend = async () => {
     if (!input.trim()) return;
 
     setMessages((prev) => [...prev, { text: input, isBot: false }]);
     setInput("");
+    setIsTyping(true);
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/ask",
+        "https://queryaichat.azurewebsites.net/ask",
         JSON.stringify({
           question: input,
         })
@@ -137,6 +139,7 @@ function App() {
         ...prev,
         { text: response.data.answer, isBot: true },
       ]);
+      setIsTyping(false);
     } catch (error) {
       console.error("Error communicating with backend:", error);
       setMessages((prev) => [
@@ -186,6 +189,13 @@ function App() {
                 </p>
               </div>
             ))}
+            {isTyping && (
+                <div className="message bot typing">
+                    <span className="dot"></span>
+                    <span className="dot"></span>
+                    <span className="dot"></span>
+                </div>
+            )}
             <div ref={msgEnd} />
           </div>
           <div className="chatFooter">
